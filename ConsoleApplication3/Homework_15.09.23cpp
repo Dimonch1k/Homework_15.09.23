@@ -1,0 +1,137 @@
+#include <iostream>
+using namespace std;
+
+
+class Node {
+public:
+	int data;
+	Node* left;
+	Node* right;
+	
+	Node(int value)
+	{
+		left = nullptr;
+		right = nullptr;
+		data = value;
+	}
+};
+
+
+ 
+// The function to display the binary tree
+void display2D(Node* root, int space)
+{
+	if (root == nullptr)
+	{
+		return;
+	}
+
+	space += Count; 
+
+	display2D(root->right, space);
+	cout << "\n";
+	for (int i = Count; i < space; i++)
+	{
+		cout << " ";
+	}
+
+	cout << root->data;
+
+	display2D(root->left, space);
+}
+
+
+// The function to search the Node
+int Search_Node(Node* root, int fData)
+{
+	if (!root)
+	{
+		return 0;
+	}
+	if (root->data == fData)
+	{
+		return root->data;
+	}
+
+	if (root->data < fData)
+	{
+		Search_Node(root->right, fData);	
+	}
+	else {
+		Search_Node(root->left, fData);
+	}
+	
+}
+
+// The function to display the nodes that have double nodes
+void Count_of_double_nodes(Node* root)
+{
+
+	if (!root)
+	{
+		return;
+	}
+
+	if (root->left && root->right)
+	{
+		cout << root->data << " ";
+	}
+	Count_of_double_nodes(root->right);
+	Count_of_double_nodes(root->left);
+}
+
+
+int main()
+{
+	Node* root = new Node(9);
+
+
+	root->left = new Node(6);
+	root->left->left = new Node(3);
+	root->left->left->left = new Node(1);
+	root->left->left->left->left = new Node(0);
+	root->left->left->left->right = new Node(2);
+	root->left->left->right = new Node(4);
+	root->left->left->right->right = new Node(5);
+
+	root->left->right = new Node(8);
+	root->left->right->left = new Node(7);
+
+
+	root->right = new Node(17);
+	root->right->left = new Node(16);
+	root->right->left->left = new Node(12);
+
+
+	root->right->right = new Node(20);
+	root->right->right->left = new Node(19);
+	root->right->right->left->left = new Node(18);
+	root->right->right->right = new Node(21);
+
+	display2D(root, 0);
+
+
+	cout << "\n\n\n\n";
+	int find;
+	cout << "Enter the value to find the node: ";
+	cin >> find;
+
+	int findNode = Search_Node(root, find);
+
+	if (!findNode)
+	{
+		cout << "This Value not found!!!";
+	}
+	else {
+		cout << "The Value " << find << " was found!!!";
+	}
+
+
+	cout << "\n\n\n";
+
+	cout << "The nodes, that have subsidiary double nodes are: ";
+	Count_of_double_nodes(root);
+
+
+	cout << ":)\n\n\n\n";
+}
